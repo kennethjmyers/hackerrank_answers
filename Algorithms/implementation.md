@@ -1,4 +1,4 @@
-# Implementation exercises (python3)
+# Implementation Exercises (python3)
 
 ## Angry Professor
 
@@ -175,6 +175,241 @@ for a0 in range(t):
 
 ## Lisas workbook
 
+
+```
+from math import ceil
+
+
+n,k = input().strip().split()
+n,k = int(n),int(k)
+t_arr = input().strip().split()
+t_arr = [int(i) for i in t_arr]
+
+page = 1
+count = 0
+for ti in t_arr:
+    problems_by_page = [[j for j in range(i*k+1,min(ti+1,i*k+k+1))] for i in range(ceil(ti/k))]
+    for problems in problems_by_page:
+        if page in problems:
+            count += 1
+        page +=1
+
+print(count)
+```
+
+## The Grid Search
+
+```
+#!/bin/python3
+
+import sys
+
+
+t = int(input().strip())
+for a0 in range(t):
+    R,C = input().strip().split(' ')
+    R,C = [int(R),int(C)]
+    G = []
+    G_i = 0
+    for G_i in range(R):
+       G_t = str(input().strip())
+       G.append(G_t)
+    r,c = input().strip().split(' ')
+    r,c = [int(r),int(c)]
+    P = []
+    P_i = 0
+    for P_i in range(r):
+       P_t = str(input().strip())
+       P.append(P_t)
+
+    check = False
+    for i in range(R-r+1):
+        if G[i].find(P[0],0)==-1:
+            continue
+        else:
+            for j in range(C-c+1):
+                if P == [x[j:j+c] for x in G[i:i+r]]:
+                    check = True
+                    break
+        if check == True:
+            break
+    if check == True:
+        print('YES')
+    else:
+        print('NO')
+```
+
+## Cavity Map
+
+```
+#!/bin/python3
+
+import sys
+
+
+n = int(input().strip())
+grid = []
+grid_i = 0
+for grid_i in range(n):
+   grid_t = str(input().strip())
+   grid.append(grid_t)
+
+for i in range(1,n-1):
+    for j in range(1,n-1):
+        if (grid[i][j] > grid[i][j+1] and\
+        grid[i][j] > grid[i][j-1] and\
+        grid[i][j] > grid[i+1][j] and\
+        grid[i][j] > grid[i-1][j]) and\
+        'X' not in [grid[i-1][j],grid[i+1][j],grid[i][j-1],grid[i][j+1]]:
+            grid[i] = grid[i][:j]+'X'+grid[i][j+1:]
+
+for row in grid:
+    print(row)
+```
+
+## Caesar Cipher
+
+```
+#!/bin/python3
+
+import sys
+
+
+n = int(input().strip())
+s = input().strip()
+k = int(input().strip())
+
+result = []
+for i in s:
+    if not i.isalpha():
+        result.append(i)
+        continue
+    if i.islower():
+        result.append(chr(((ord(i)-97)+k)%26+97))
+    else:
+        result.append(chr(((ord(i)-65)+k)%26+65))
+print(''.join(result))
+```
+
+## Library Fine
+
+```
+#!/bin/python3
+
+import sys
+
+
+d1,m1,y1 = input().strip().split(' ')
+d1,m1,y1 = [int(d1),int(m1),int(y1)]
+d2,m2,y2 = input().strip().split(' ')
+d2,m2,y2 = [int(d2),int(m2),int(y2)]
+
+if y1 < y2:
+    print(0)
+elif y1 > y2:
+    print(10000)
+else:
+    if m1 > m2:
+        print(500*(m1-m2))
+    elif m1 < m2:
+        print(0)
+    else:
+        if d1>d2:
+            print(15*(d1-d2))
+        elif d1 <= d2:
+            print(0)
+```
+
+## Manasa and Stones
+
+```
+t = int(input().strip())
+
+for _ in range(t):
+    n = int(input().strip())
+    a = int(input().strip())
+    b = int(input().strip())
+
+    solutions = []
+    for i in range(n):
+        solutions.append(a*i+b*(n-1-i))
+
+    solutions = sorted(list(set(solutions)))
+    for i in solutions:
+        print(i,end=' ')
+    print()
+```
+
+## ACM ICPC Team
+
+```
+#!/bin/python3
+
+import sys
+
+
+n,m = input().strip().split(' ')
+n,m = [int(n),int(m)]
+topic = []
+topic_i = 0
+for topic_i in range(n):
+   topic_t = str(input().strip())
+   topic.append(topic_t)
+
+bin_class = []
+max_topics = 0
+teams_w_max = 0
+for t in topic:
+    bin_class.append(int(t,2))
+
+for i,x in enumerate(bin_class):
+    for y in bin_class[i+1:]:
+        b = bin(x|y)
+        count = b.count('1')
+        if count > max_topics:
+            max_topics = count
+            teams_w_max = 1
+        elif count == max_topics:
+            teams_w_max += 1
+
+print(max_topics)
+print(teams_w_max)
+```
+
+## Extra Long Factorials
+
+```
+n = int(input().strip())
+
+from math import factorial
+
+print(factorial(n))
+```
+
+## Taum and B'day
+
+```
+#!/bin/python3
+
+import sys
+
+
+t = int(input().strip())
+for a0 in range(t):
+    b,w = input().strip().split(' ')
+    b,w = [int(b),int(w)]
+    x,y,z = input().strip().split(' ')
+    x,y,z = [int(x),int(y),int(z)]
+
+    if z+x < y:
+        print((w+b)*x + w*z)
+    elif z+y < x:
+        print((w+b)*y + b*z)
+    else:
+        print(b*x+w*y)
+```
+
+## The Time in Words
 
 ```
 
