@@ -412,5 +412,53 @@ for a0 in range(t):
 ## The Time in Words
 
 ```
+#!/bin/python3
+
+import sys
+
+
+h = int(input().strip())
+m = input().strip()
+m1,m2 = int(m[0])*10,int(m[1])
+m = int(m)
+
+num_dict = {0:'',1:'one',2:'two',3:'three',4:'four',\
+            5:'five',6:'six',7:'seven',8:'eight',\
+             9:'nine',10:'ten',11:'eleven',12:'twelve',\
+            13:'thirteen',14:'fourteen',15:'quarter',16:'sixteen',\
+            17:'seventeen',18:'eighteen',19:'nineteen',\
+            20:'twenty', 30:'half'}
+
+if m == 0:
+    print(num_dict[h],'o\' clock')
+
+elif m == 1 or m == 59:
+    if m == 1:
+        print('one minute past', num_dict[h])
+    else:
+        print('one minute to', num_dict[(h+1)%13])
+
+elif m == 30:
+    print('half past', num_dict[h])
+
+elif m == 15:
+    print('quarter past', num_dict[h])
+elif m == 45:
+    print('quarter to', num_dict[(h+1)%13])
+elif m < 30:
+    if m <= 20:
+        print(num_dict[m2],'minutes past',num_dict[h])
+    elif m > 20:
+        print(num_dict[m1], num_dict[m2], 'minutes past', num_dict[h])
+else:
+    if m < 40:
+        print(num_dict[m1-10], num_dict[10-m2], 'minutes to', num_dict[(h+1)%13])
+    else:
+        print(num_dict[60-m], 'minutes to', num_dict[(h+1)%13])
+```
+
+## Modified Kaprekar Numbers
+
+```
 
 ```
