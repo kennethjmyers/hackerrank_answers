@@ -566,7 +566,7 @@ Code may be long but it is fast. Here is my approach:
 
 - Then I take the look up that coordinates number in the cycle, add r, the rotation to it, mod it by the number of elements in the cycle and then look up the coordinates of its new location
 
--Then I place its value in the new array and after all that I print out the final array
+- Then I place its value in the new array and after all that I print out the final array
 
 All test cases passed in < 0.5 second
 ```
