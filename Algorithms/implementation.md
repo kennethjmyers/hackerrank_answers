@@ -495,5 +495,69 @@ if not found:
 ## Encryption
 
 ```
+from math import ceil,floor,sqrt
+
+
+s = input().strip()
+
+l = len(s)
+sqrtl = sqrt(l)
+ul = ceil(sqrtl)
+ll = floor(sqrtl)
+if ul*ll < l:
+    r = c =ul
+elif ul*ul == l:
+    r = c = ul
+elif ll*ll == l:
+    r = c = ll
+else:
+    r = ll
+    c = ul
+
+first_grid = [[ch for j,ch in enumerate(s) if j//c == i] for i in range(r)]
+
+for i in range(c):
+    for j in range(r):
+        if j != r-1:
+            print(first_grid[j][i],end='')
+        else:
+            try:
+                print(first_grid[j][i],end=' ')
+            except:
+                print(' ',end='')
+```
+
+## Larrys Array
+
+Further reading on this question:
+[Parity of a Permutation](https://en.wikipedia.org/wiki/Parity_of_a_permutation)
+[http://www.math.ubc.ca/~cass/courses/m308-02b/projects/grant/fifteen.html]
+[The 15 puzzle problem]()
+```
+#parity checker taken from http://code.activestate.com/recipes/578227-generate-the-parity-or-sign-of-a-permutation/
+
+T = int(input().strip())
+
+for _ in range(T):
+    N = int(input().strip())
+    arr = list(map(int,input().strip().split()))
+
+    s_arr = sorted(arr)
+
+    parity = 1
+    for i in range(0,len(arr)-1):
+        if arr[i] != s_arr[i]:
+            parity *= -1
+            mn = min(range(i,len(arr)), key=arr.__getitem__)
+            arr[i],arr[mn] = arr[mn],arr[i]
+    if parity == 1:
+        print('YES')
+    else:
+        print('NO')
+```
+
+## [Algo] Matrix Rotation
+
+```
 
 ```
