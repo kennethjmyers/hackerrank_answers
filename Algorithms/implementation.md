@@ -558,6 +558,113 @@ for _ in range(T):
 
 ## [Algo] Matrix Rotation
 
-```
 
+Code may be long but it is fast. Here is my approach:
+- I basically create 2 dictionaries, one for looking up the coordinates of a count in a cycle and one for looking up the count given the coordinates in a cycle
+
+- Then I map each coordinate to where it would be if it were reflected into the upper left corner because it will always end up in the same cycle
+
+- Then I take the look up that coordinates number in the cycle, add r, the rotation to it, mod it by the number of elements in the cycle and then look up the coordinates of its new location
+
+-Then I place its value in the new array and after all that I print out the final array
+
+All test cases passed in < 0.5 second
+```
+from collections import defaultdict
+
+def cycle_finder(coord, m,n):
+    i,j  = coord
+    first_coord = coord
+    col_half = (n-1)//2
+    row_half = (m-1)//2
+    num_to_coord_dict = defaultdict(list)
+    coord_to_num_dict = defaultdict(int)
+    counter = 0
+    num_to_coord_dict[counter] = coord
+    coord_to_num_dict[tuple(coord)] = counter
+    for _ in range(1200-4):
+        if j <= col_half:
+            if i <= row_half:
+                #upper left corner conditions
+                if i >= j:
+                    i+=1
+                elif i < j:
+                    j-=1
+
+            else:
+                #lower left corner conditions
+                if j >= m-1-i:
+                    j+=1
+                elif j < m-1-i:
+                    i+=1
+
+        else:
+            if i <= row_half:
+                #upper right corner conditions
+                if  i <= n-1-j:
+                    j-=1
+                elif  i > n-1-j:
+                    i-=1
+
+            else:
+                #lower right corner conditions
+                if  m-1-i >= n-1-j:
+                    i-=1
+                elif m-1-i < n-1-j:
+                    j+=1
+        counter+=1
+        num_to_coord_dict[counter] = [i,j]
+        coord_to_num_dict[tuple([i,j])] = counter
+        if [i,j] == first_coord:
+            return [num_to_coord_dict,coord_to_num_dict,counter]
+
+
+m, n, r = map(int,input().strip().split())
+
+all_cycle_dicts = defaultdict(list)
+for i in range(min(m//2,n//2)+1):
+    all_cycle_dicts[i] = cycle_finder([i,i],m,n)
+
+new_coords = [[0]*n for _ in range(m)]
+
+#initialize
+col_half = (n-1)//2
+row_half = (m-1)//2
+for i in range(m):
+    #for j,x in enumerate(list(map(int,input().strip().split()))):
+    j = 0
+    for x in input().strip().split():
+        if j <= col_half:
+            if i <= row_half:
+                #upper left corner conditions
+                coord = [i,j]
+
+            else:
+                #lower left corner conditions
+                coord = [m-1-i,j]
+
+        else:
+            if i <= row_half:
+                #upper right corner conditions
+                coord = [i,n-1-j]
+
+            else:
+                #lower right corner conditions
+                coord = [m-1-i,n-1-j]
+
+        if coord[1] >= coord[0] in all_cycle_dicts:
+            new_num = (all_cycle_dicts[coord[0]][1][(i,j)]+r)%all_cycle_dicts[coord[0]][2]
+            new_c = all_cycle_dicts[coord[0]][0][new_num]
+        else:
+            new_num = (all_cycle_dicts[coord[1]][1][(i,j)]+r)%all_cycle_dicts[coord[1]][2]
+            new_c = all_cycle_dicts[coord[1]][0][new_num]
+
+        new_coords[new_c[0]][new_c[1]] = x
+        #print(new_coords)
+        j+=1
+
+for k in new_coords:
+    for v in k:
+        print(v, end=' ')
+    print()
 ```
