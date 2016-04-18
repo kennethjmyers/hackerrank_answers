@@ -460,5 +460,40 @@ else:
 ## Modified Kaprekar Numbers
 
 ```
+p = int(input().strip())
+q = int(input().strip())
+
+kap_nums = []
+found = False
+for i in range(p, q+1):
+    num = i**2
+    r_digits = 1
+    r = 0
+    while num > 0:
+        r += 10**(r_digits-1) * (num%10)
+        num //= 10
+        r_digits +=1
+        if r == 0:
+            continue
+        if num + r == i:
+            num2 = num
+            l_digits = 1
+            while num2 > 0:
+                num2 //= 10
+                l_digits += 1
+            #check to make sure left and right digits are equal or 1 less on left
+            if l_digits == r_digits or l_digits == r_digits - 1:
+                print(i,end=' ')
+                found = True
+                break
+            elif r_digits - l_digits >= 2:
+                break
+if not found:
+    print('INVALID RANGE')
+```
+
+## Encryption
+
+```
 
 ```
