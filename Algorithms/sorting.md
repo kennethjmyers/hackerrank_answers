@@ -396,5 +396,87 @@ for _ in range(Q):
 ## [Almost Sorted](https://www.hackerrank.com/challenges/almost-sorted)
 
 ```
+N = int(input().strip())
+
+arr = [int(i) for i in input().strip().split()]
+
+is_sorted = True
+can_be_sorted = True
+
+arr.insert(0,-1)
+arr.append(10000001)
+
+hills = 0
+h = []
+dips = 0
+d = []
+for i in range(1,N+1):
+    if arr[i-1] > arr[i] < arr[i+1]:
+        d.append(i)
+        dips += 1
+    elif arr[i-1] < arr[i] > arr[i+1]:
+        h.append(i)
+        hills += 1
+
+if hills == dips == 0:
+    print('yes')
+elif hills == dips == 2:
+    if h[0]!=d[0]-1 or h[1]!=d[1]-1:
+        print('no')
+    else:
+        l = h[0]
+        r = d[1]
+        arr[l],arr[r] = arr[r],arr[l]
+        if arr[l+1]>arr[l]>arr[l-1] and arr[r-1]<arr[r]<arr[r+1]:
+            print('yes')
+            print('swap',l,r)
+elif hills == dips == 1:
+    l = h[0]
+    r = d[0]
+    if r == l+1:
+        if arr[r]<arr[l-1] or arr[l]>arr[r+1]:
+            print('no')  
+        else:
+            print('yes')
+            print('swap',l,r)
+    elif arr[l+1]>arr[r]>arr[l-1] and arr[r-1]<arr[l]<arr[r+1]:
+        print('yes')
+        print('reverse',l,r)
+else:
+    print('no')
+```
+
+## [Sherlock and Pairs](https://www.hackerrank.com/challenges/sherlock-and-pairs)
+
+```
+#P = n!/(n-k)!
+
+from math import factorial
+from collections import Counter
+
+def f(n):
+    return factorial(n)
+
+def nPr(n,r):
+    return int(f(n)/f(n-r))
+
+T = int(input().strip())
+
+for _ in range(T):
+    N = int(input().strip())
+    arr = [int(i) for i in input().strip().split()]
+    c = Counter(arr)
+    total = 0
+    for k,v in c.items():
+        if v >= 2:
+            total+=nPr(v,2)
+
+    print(total)
+```
+
+## [Insertion Sort Advanced Analysis](https://www.hackerrank.com/challenges/insertion-sort)
+
+[Helpful link](https://sadakurapati.wordpress.com/2013/10/11/insertion-sort-counting-element-swaps/) (see approach 3)
+```
 
 ```
