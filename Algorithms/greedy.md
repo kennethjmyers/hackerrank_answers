@@ -113,3 +113,23 @@ for n in range(N):
 for i in range(len(when_delivered)):
     print(when_delivered[i][0], end=' ')
 ```
+
+## [Mark and Toys](https://www.hackerrank.com/challenges/mark-and-toys/copy-from/20093382)
+
+```
+N,K = [int(i) for i in input().strip().split()]
+arr = [int(i) for i in input().strip().split()]
+
+
+arr = sorted(arr)
+
+count = 0
+sums = 0
+for x in arr:
+    sums += x
+    if sums > K:
+        break
+    count+=1
+
+print(count)
+```
