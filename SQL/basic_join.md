@@ -21,3 +21,13 @@ FROM CITY
   ON CITY.countrycode = COUNTRY.code
 WHERE COUNTRY.continent = 'Africa';
 ```
+
+## [Average Population of Each Continent](https://www.hackerrank.com/challenges/average-population-of-each-continent)
+
+```
+SELECT Country.continent, FLOOR(AVG(City.population))
+FROM Country
+  JOIN City
+    ON Country.code = city.countrycode
+GROUP BY Country.continent;
+```
