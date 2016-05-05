@@ -31,3 +31,27 @@ FROM Country
     ON Country.code = city.countrycode
 GROUP BY Country.continent;
 ```
+
+## [The Report](https://www.hackerrank.com/challenges/the-report)
+
+MySQL (allowed me to see the result whereas Oracle didn't)
+```
+SELECT * FROM
+(
+    SELECT students.name, grades.grade, students.marks
+    FROM students
+    JOIN grades
+    ON students.marks >= grades.min_mark and students.marks <= grades.max_mark
+    WHERE grades.grade >= 8
+    ORDER BY grades.grade desc, students.name asc)a
+UNION
+SELECT * FROM
+(
+    SELECT null, grades.grade, students.marks
+    FROM students
+    JOIN grades
+    ON students.marks >= grades.min_mark and students.marks <= grades.max_mark
+    WHERE grades.grade < 8
+    ORDER BY grades.grade desc, students.marks asc
+)b
+```
