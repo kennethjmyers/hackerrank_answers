@@ -33,3 +33,19 @@ PIVOT
 ) as PVT
 ;
 ```
+
+## [Binary Search Trees](https://www.hackerrank.com/challenges/binary-search-tree-1)
+
+```
+SELECT b.N, CASE
+            WHEN b.P IS NULL
+                THEN 'Root'
+            ELSE CASE
+                    WHEN (SELECT COUNT(*) FROM BST WHERE P=b.N)>0
+                        THEN 'Inner'
+                    ELSE 'Leaf'
+                    END
+            END
+FROM BST AS b
+ORDER BY b.N;
+```
