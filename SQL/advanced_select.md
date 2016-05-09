@@ -49,3 +49,15 @@ SELECT b.N, CASE
 FROM BST AS b
 ORDER BY b.N;
 ```
+
+## [Type of Triangle](https://www.hackerrank.com/challenges/what-type-of-triangle)
+
+```
+SELECT CASE
+       WHEN A+B <= C OR A+C <= B OR C+B <= A THEN 'Not A Triangle'
+       WHEN A = B AND B = C THEN 'Equilateral'
+       WHEN A = B OR A = C OR B = C THEN 'Isosceles'
+       ELSE 'Scalene'
+       END AS t
+FROM Triangles;
+```
