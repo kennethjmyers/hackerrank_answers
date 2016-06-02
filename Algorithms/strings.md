@@ -1,6 +1,6 @@
 # Strings
 
-## Pangrams
+## [Pangrams](https://www.hackerrank.com/challenges/pangrams)
 
 ```
 from collections import defaultdict
@@ -24,7 +24,7 @@ else:
     print('not pangram')
 ```
 
-## Alternating Characters
+## [Alternating Characters](https://www.hackerrank.com/challenges/alternating-characters)
 
 All test cases passed in < 0.4 seconds. Save time by not actually removing from string/list
 ```
@@ -47,7 +47,7 @@ for _ in range(T):
     print(deletions)
 ```
 
-## The Love-Letter Mystery
+## [The Love-Letter Mystery](https://www.hackerrank.com/challenges/the-love-letter-mystery)
 
 The idea behind this is to take the absolute difference between symmetric opposites in the string and sum each of them. This is because the absolute difference is the amount a letter has to be lowered to reach the other.
 ```
@@ -71,7 +71,7 @@ for _ in range(T):
     print(count)
 ```
 
-## Gemstones
+## [Gemstones](https://www.hackerrank.com/challenges/gem-stones)
 
 ```
 from functools import reduce
@@ -86,7 +86,7 @@ for _ in range(T):
 print(len(reduce(set.intersection,rocks)))
 ```
 
-## Funny String
+## [Funny String](https://www.hackerrank.com/challenges/funny-string)
 
 ```
 
