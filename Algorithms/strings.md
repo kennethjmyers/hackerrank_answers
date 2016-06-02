@@ -181,3 +181,70 @@ if __name__ == '__main__':
         S = input().strip()
         print(is_palindrome(S))
 ```
+
+## [Two Strings](https://www.hackerrank.com/challenges/two-strings)
+
+```
+def is_substring(S1,S2):
+    '''
+    >>> is_substring('hello','world')
+    'YES'
+    >>> is_substring('hi','world')
+    'NO'
+    '''
+
+    S1 = set(list(S1))
+    S2 = set(list(S2))
+    if S1.intersection(S2):
+        return 'YES'
+    else:
+        return 'NO'
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    T = int(input().strip())
+    for _ in range(T):
+        S1 = input().strip()
+        S2 = input().strip()
+        print(is_substring(S1,S2))
+```
+
+## [Game of Thrones - I](https://www.hackerrank.com/challenges/game-of-thrones)
+
+```
+from collections import Counter
+
+def ana_pal(S):
+    '''
+    >>> ana_pal('aaabbbb')
+    'YES'
+    >>> ana_pal('cdefghmnopqrstuvw')
+    'NO'
+    >>> ana_pal('cdcdcdcdeeeef')
+    'YES'
+    '''
+    c = Counter(S)
+    count_odds = 0
+    #we can only ever have at most one odd count of letters
+    #any more prevents a palindrome
+    for _,v in c.items():
+        if v%2:
+            count_odds +=1
+            if count_odds == 2:
+                return 'NO'
+    return 'YES'
+
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    S = input().strip()
+    print(ana_pal(S))
+```
+
+##
