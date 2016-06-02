@@ -89,7 +89,95 @@ print(len(reduce(set.intersection,rocks)))
 ## [Funny String](https://www.hackerrank.com/challenges/funny-string)
 
 ```
+def is_funny(s):
+    for i in range(1,len(s)):
+        if abs(ord(s[i])-ord(s[i-1])) != abs(ord(s[len(s)-i])-ord(s[len(s)-i-1])):
+            return 'Not Funny'
+    return 'Funny'
+
+N = int(input().strip())
+for _ in range(N):
+    s = input().strip()
+    print(is_funny(s))
 
 ```
 
-##
+## [Anagram](https://www.hackerrank.com/challenges/anagram)
+
+```
+from collections import Counter
+
+def anagram_finder(S):
+    if len(S)%2:
+        return -1
+    S1 = S[:len(S)//2]
+    S2 = S[len(S)//2:]
+    S1_count = Counter(S1)
+    S2_count = Counter(S2)
+    if S1_count == S2_count:
+        return 0
+    else:
+        total = 0
+        for k,v in S2_count.items():
+            if v > S1_count[k]:
+                total+= v-S1_count[k]
+        return total
+
+N = int(input().strip())
+for _ in range(N):
+    S = input().strip()
+    print(anagram_finder(S))
+```
+
+## [Palindrome Index](https://www.hackerrank.com/challenges/palindrome-index)
+
+```
+def is_palindrome(S):
+    '''
+    >>> is_palindrome('aaab')
+    3
+    >>> is_palindrome('baa')
+    0
+    >>> is_palindrome('aaa')
+    -1
+    >>> is_palindrome('quyjjdcgsvvsgcdjjyq')
+    1
+    >>> is_palindrome('hgygsvlfwcwnswtuhmyaljkqlqjjqlqkjlaymhutwsnwcflvsgygh')
+    8
+    >>> is_palindrome('hgygsvlfcwnswtuhmyaljkqlqjjqlqkjlaymhutwsnwcwflvsgygh')
+    44
+    '''
+    skipped = False
+    r_offset = 0
+    removed = -1
+    for i in range(len(S)//2):
+        #print(S[i], S[len(S)-1-i-r_offset])
+        if S[i] == S[len(S)-1-i-r_offset]:
+            continue
+        elif not skipped:
+            skipped = True
+            #You need to check if the letter pair after the first adjusted pair continue the palindrome
+            if S[i+1] == S[len(S)-1-i] and S[i+2] == S[len(S)-2-i]:
+                removed = i
+                r_offset -= 1
+                continue
+            elif S[i] == S[len(S)-1-i-1] and S[i+1] == S[len(S)-2-i-1]:
+                removed = len(S)-1-i
+                r_offset +=1
+                continue
+            else:
+                return -1
+        else:
+            #print(len(S), i, r_offset)
+            return -1
+    return removed
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    T = int(input().strip())
+    for _ in range(T):
+        S = input().strip()
+        print(is_palindrome(S))
+```
