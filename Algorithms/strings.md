@@ -247,4 +247,101 @@ if __name__ == '__main__':
     print(ana_pal(S))
 ```
 
-##
+## [Make it Anagram](https://www.hackerrank.com/challenges/make-it-anagram)
+
+```
+from collections import Counter
+
+def count_dels(S1, S2):
+    '''
+    >>> count_dels('cde','abc')
+    4
+    '''
+    C1,C2 = Counter(S1),Counter(S2)
+    uniques = set(C1.keys()).union(set(C2.keys()))
+    total_del = 0
+    for x in uniques:
+        total_del+= abs(C1[x]-C2[x])
+    return total_del
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    S1 = input().strip()
+    S2 = input().strip()
+    print(count_dels(S1,S2))
+```
+
+## [Bear and Steady Gene](https://www.hackerrank.com/challenges/bear-and-steady-gene)
+
+
+Couldn't get the O(N) solution on my own, got this solution from [here](http://pastebin.com/AVPGcURN)
+```
+from collections import Counter, defaultdict
+
+
+def is_valid_string(good_len, memo):
+    '''
+    >>> is_valid_string(2, {'A':2})
+    True
+    '''
+    for k,v in memo.items():
+        if v>good_len:
+            return False
+    return True
+
+
+def find_sub_len(full_length,string):
+    '''
+    >>> find_sub_len(8, 'GAAATAAA')
+    5
+    >>> find_sub_len(8, 'GTGCCGCA')
+    2
+    '''
+    good_len = full_length//4
+
+    C = defaultdict(int)
+
+    T_found = False
+    for i,s in enumerate(string[::-1]):
+        C[s]+=1
+        if C[s] > good_len and not T_found:
+            T = full_length -1 - i
+            T_found = True
+
+    if C['A']==C['T']==C['G']==C['C']:
+        return 0
+
+
+    current_solution = 99999999
+    t = T
+    ext_memo = defaultdict(int)
+    for s in string[t+1:]:
+        ext_memo[s]+=1
+    for h in range(len(string)):
+        while not is_valid_string(good_len, ext_memo) and t < len(string):
+            ext_memo[string[t]]-=1
+            t+=1
+
+        new_solution = max(0, t - h + 1)
+        if current_solution > new_solution:
+            current_solution = new_solution
+        if t >= len(string):
+            break
+        if h>t:
+            break
+        ext_memo[string[h]]+=1
+
+    return current_solution
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    full_length = int(input().strip())
+    string = input().strip()
+    print(find_sub_len(full_length,string))
+```
