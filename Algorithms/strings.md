@@ -279,13 +279,15 @@ if __name__ == '__main__':
 
 Couldn't get the O(N) solution on my own, got this solution from [here](http://pastebin.com/AVPGcURN)
 ```
-from collections import Counter, defaultdict
+from collections import defaultdict
 
 
 def is_valid_string(good_len, memo):
     '''
     >>> is_valid_string(2, {'A':2})
     True
+    >>> is_valid_string(2, {'A':3})
+    False
     '''
     for k,v in memo.items():
         if v>good_len:
@@ -299,40 +301,40 @@ def find_sub_len(full_length,string):
     5
     >>> find_sub_len(8, 'GTGCCGCA')
     2
+    >>> find_sub_len(8, 'AATTGGCC')
+    0
     '''
     good_len = full_length//4
+    ext_memo = defaultdict(int)
 
-    C = defaultdict(int)
+    t=-1
+    for i in range(full_length-1,-1,-1):
+        ext_memo[string[i]]+=1
+        if not is_valid_string(good_len,ext_memo):
+            t = i+1
+            ext_memo[string[i]]-=1
+            break
 
-    T_found = False
-    for i,s in enumerate(string[::-1]):
-        C[s]+=1
-        if C[s] > good_len and not T_found:
-            T = full_length -1 - i
-            T_found = True
-
-    if C['A']==C['T']==C['G']==C['C']:
-        return 0
-
+    if t==-1:
+        return 0 #counts are equal, no invalid string found
 
     current_solution = 99999999
-    t = T
-    ext_memo = defaultdict(int)
-    for s in string[t+1:]:
-        ext_memo[s]+=1
-    for h in range(len(string)):
-        while not is_valid_string(good_len, ext_memo) and t < len(string):
+
+    for h in range(-1,full_length-1):
+        if t >= full_length:
+            break
+        if h>=t:
+            break
+        while not is_valid_string(good_len, ext_memo) and t < full_length:
             ext_memo[string[t]]-=1
             t+=1
-
-        new_solution = max(0, t - h + 1)
+        if t > full_length or not is_valid_string(good_len,ext_memo):
+            break
+        new_solution = max(0, t - h - 1)
         if current_solution > new_solution:
             current_solution = new_solution
-        if t >= len(string):
-            break
-        if h>t:
-            break
-        ext_memo[string[h]]+=1
+
+        ext_memo[string[h+1]]+=1
 
     return current_solution
 
