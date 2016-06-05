@@ -93,53 +93,49 @@ for _ in range(T):
 
 ## [Prim's (MST): Special Subtree](https://www.hackerrank.com/challenges/primsmstsub)
 
-Slow code, doesn't pass all tests
-```
-def argmin(lst, visited):
-    min_index = -1
-    current_min = 100001
-    for i,x in enumerate(lst):
-        if x == 0:
-            continue
-        elif i in visited:
-            continue
-        elif x < current_min:
-            current_min = x
-            min_index = i
+Learned Prim's from [this video](https://www.youtube.com/watch?v=z1L3rMzG1_A). My first solution used the matrix representation of a graph but after doing some reading I found that that method can be slow due to iterating over all possible connections every node inspection. Using the hashtable-list method is more space and time efficient.
 
-    if min_index >=0:
-        return min_index,current_min
-    else:
-        return None
+```
+from collections import defaultdict
 
 N,M = [int(i) for i in input().strip().split()]
 
-distance_grid = [[100001 if i!=j else 0 for i in range(N) ] for j in range(N)]
+distances = defaultdict(list)
 
-min_span_dist = (N-1)*100001
 for _ in range(M):
     x,y,r = [int(i) for i in input().strip().split()]
-    if distance_grid[x-1][y-1] > r:
-        distance_grid[x-1][y-1] = r
-        distance_grid[y-1][x-1] = r
+    distances[x].append([y,r])
+    distances[y].append([x,r])
 
 S = int(input().strip())
 
+parent_weights = defaultdict(list)
+for i in range(1,N+1):
+    parent_weights[i] = [i,100000000,None] #thisnode, distance, parentnode
+
+parent_weights[S] = [S,0,None]
+
+min_comparison = 100000000
+min_node = S
+
 min_distance = 0
-examined_set = set([S])
+unexamined_set = set(list(range(1,N+1)))
+examined_set = set()
 
 while len(examined_set)<N:
-    min_val = 100001
-    for i in examined_set:
-        res = argmin(distance_grid[i], examined_set)
-        if res:
-            m_i,m_v = res
-            if m_v < min_val:
-                min_val = m_v
-                min_index = m_i
+    min_distance += parent_weights[min_node][1]
+    for x in distances[min_node]:
+        if parent_weights[x[0]][1] > x[1] and x[0] not in examined_set:
+            parent_weights[x[0]] = [x[0],x[1],min_node]
 
-    min_distance += min_val
-    examined_set.add(min_index)    
+    unexamined_set.remove(min_node)
+    examined_set.add(min_node)
 
-print(min_distance)        
+    next_min_node_dist = 100000000
+    for x in unexamined_set:
+        if parent_weights[x][1] < next_min_node_dist:
+            next_min_node_dist = parent_weights[x][1]
+            min_node = x
+
+print(min_distance)
 ```
