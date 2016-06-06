@@ -136,8 +136,31 @@ for i in range(1,n):
 print(sum(candies))
 ```
 
-## Stock Maximize
+## [Stock Maximize](https://www.hackerrank.com/challenges/stockmax)
 
+This is not DP but it will pass all test cases. The idea is to find all of the maxima of the array, then buy up all stocks before that point and sell them on that maxima day. Then repeat this for all the stocks after that maxima (find maxima, buy before, sell on day, repeat for days after...). This is not a bad solution though. Time is linear and space used only decreases over time since each array is replaced by a smaller one. [Better solution that uses same concept](https://www.hackerrank.com/challenges/stockmax/forum/comments/126930).
 ```
+def arg_max(arr):
+    max_v = -999999999
+    for i,x in enumerate(arr):
+        if x > max_v:
+            max_v = x
+            max_i = i
 
+    return max_i
+
+T = int(input().strip())
+for _ in range(T):
+    N = int(input().strip())
+    arr = [int(i) for i in input().strip().split()]
+
+    profit = 0
+    while arr:
+        max_i = arg_max(arr)
+        bought = sum(arr[:max_i])
+        amt_bought = len(arr[:max_i])
+        profit -= bought
+        profit += amt_bought*arr[max_i]
+        arr = arr[max_i+1:]
+    print(profit)
 ```
