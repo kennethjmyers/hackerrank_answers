@@ -138,7 +138,7 @@ print(sum(candies))
 
 ## [Stock Maximize](https://www.hackerrank.com/challenges/stockmax)
 
-This is not DP but it will pass all test cases. The idea is to find all of the maxima of the array, then buy up all stocks before that point and sell them on that maxima day. Then repeat this for all the stocks after that maxima (find maxima, buy before, sell on day, repeat for days after...). This is not a bad solution though. Time is linear and space used only decreases over time since each array is replaced by a smaller one. [Better solution that uses same concept](https://www.hackerrank.com/challenges/stockmax/forum/comments/126930).
+This is not DP but it will pass all test cases. The idea is to find all of the maxima of the array, then buy up all stocks before that point and sell them on that maxima day. Then repeat this for all the stocks after that maxima (find maxima, buy before, sell on day, repeat for days after...). Worst case (stock prices are all decreasing) this method is O(N^2) ([see this page for why](http://www.leda-tutorial.org/en/official/ch02s02s03.html)) and space used only decreases over time since each array is replaced by a smaller one. [Here is a better solution that uses a similar concept but is O(N)](https://www.hackerrank.com/challenges/stockmax/forum/comments/126930).
 ```
 def arg_max(arr):
     max_v = -999999999
