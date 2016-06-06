@@ -164,3 +164,86 @@ for _ in range(T):
         arr = arr[max_i+1:]
     print(profit)
 ```
+
+## [Red John is Back](https://www.hackerrank.com/challenges/red-john-is-back)
+
+```
+from collections import defaultdict
+
+## Memoization for the ways to order bricks
+brick_memo = defaultdict(int)
+for i in range(1,4):
+    brick_memo[i] = 1 # only one way to arrange 4x1,2,3
+brick_memo[4] = 2 # two ways to arrange 4x4
+
+## Basically place either 4 1x4s or 1 4x1 and get
+## the count of remaining n spots and add to # of ways
+## recursively call the function for smaller N values
+def get_combinations(N):
+    '''
+    >>> get_combinations(7)
+    5
+    '''
+    if N in brick_memo:
+        return brick_memo[N]
+    ways = 0
+    if N > 4:
+        ways += get_combinations(N-4)
+    ways += get_combinations(N-1)
+    brick_memo[N] = ways
+    return ways
+
+## Memoization for whether or not something is prime
+primes = {}
+def isPrime(n):
+    '''
+    >>> isPrime(5)
+    True
+    >>> isPrime(100)
+    False
+    '''
+    if n in primes:
+        return primes[n]
+    n2 = n
+    i = 2
+    while i*i<=n:
+        if n%i == 0:
+            n//=i
+        else:
+            i+=1
+    if n2 == n:
+        primes[n2] = True
+        return True
+    else:
+        primes[n2] = False
+        return False
+
+## Memoization for the number of primes up to and including a number
+primes_up_to = {1:0,2:1,3:2,4:2,5:3}
+def prime_count(N):
+    '''
+    >>> prime_count(11)
+    5
+    '''
+    if N in primes_up_to:
+        return primes_up_to[N]
+    max_so_far = max(primes_up_to.keys())
+    primes_so_far = primes_up_to[max_so_far]
+    for i in range(max_so_far+1,N+1):
+        if isPrime(i):
+            primes_so_far+=1
+        primes_up_to[i] = primes_so_far
+    return primes_up_to[N]
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+
+    T = int(input().strip())
+    for _ in range(T):
+        N = int(input().strip())
+
+        combinations = get_combinations(N)
+        print(prime_count(combinations))
+```
