@@ -139,3 +139,62 @@ while len(examined_set)<N:
 
 print(min_distance)
 ```
+
+## [Kruskal (MST): Really Special Subtree](https://www.hackerrank.com/challenges/kruskalmstrsub)
+
+```
+
+```
+
+## [Even Tree](https://www.hackerrank.com/challenges/even-tree)
+
+```
+from collections import defaultdict
+
+N,M = [int(i) for i in input().strip().split()]
+
+#store all edges in an adjacency list
+adjacency_list = defaultdict(set)
+for _ in range(M):
+    a,b = [int(i) for i in input().strip().split()]
+    adjacency_list[a]|={b}
+    adjacency_list[b]|={a}
+
+#memoization of the number of nodes descending from a node
+#(including that starting node)
+nodes_from_here_memo = defaultdict(int)
+def find_children(this_node, parent=None):
+    if this_node in nodes_from_here_memo: # memo look up
+        return nodes_from_here_memo[this_node]
+
+    num_adj = len(adjacency_list[this_node])
+    if num_adj == 1 and parent!=None: # only a parent node, no children and not root
+        nodes_from_here_memo[this_node] = 1
+        return 1
+
+    count = 1 #this node so initiate to 1
+    for i in adjacency_list[this_node]:
+        if i == parent:
+            continue
+        count+=find_children(i,this_node) #recursively add to count
+    nodes_from_here_memo[this_node] = count
+    return count
+
+#recursively search the tree looking for even # of nodes
+def search_tree(start_node, parent_node=None):
+    nodes_to_remove = 0
+    if len(adjacency_list) == 1: # only parent adjacent (this is leaf)
+        return 0
+    for i in adjacency_list[start_node]:
+        if i == parent_node:
+            continue
+        #if there are an even number of nodes from this node
+        #then we can remove the edge above it (linking to parent)
+        if find_children(i,start_node) %2 == 0:  
+            nodes_to_remove+=1
+        nodes_to_remove += search_tree(i,start_node)
+    return nodes_to_remove
+
+#we could start at any node and search from there so lets start at 1
+print(search_tree(1))
+```
