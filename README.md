@@ -17,6 +17,11 @@
 * [Problems 11-20](/Project_Euler/problems_0011_0020.md)
 * [Problems 21-30](/Project_Euler/problems_0021_0030.md)
 
+#### [Python](/Python)
+* [Introduction](/Python/introduction.md)
+* [Data Types](/Python/data_types.md)
+* [Strings](/Python/strings.md)
+
 #### [SQL](/SQL)
 * [Advanced Join](/SQL/advanced_join.md)
 * [Advanced Select](/SQL/advanced_select.md)
@@ -24,4 +29,3 @@
 * [Alternative Queries](/SQL/alternative_queries.md)
 * [Basic Join](/SQL/basic_join.md)
 * [Basic Select](/SQL/basic_select.md)
-
