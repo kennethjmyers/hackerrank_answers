@@ -87,3 +87,82 @@ for i in range(thickness+1):
 for i in range(thickness):
     print(((c*(thickness-i-1)).rjust(thickness)+c+(c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6))  
 ```
+
+## [Text Wrap](https://www.hackerrank.com/challenges/text-wrap)
+
+```
+s = input()
+n = int(input())
+
+for i in range(len(s)):
+    print(s[i], end='')
+    if (i+1)%n == 0:
+        print('')
+```
+
+## [Designer Door Mat](https://www.hackerrank.com/challenges/designer-door-mat)
+
+```
+N, M = map(int,input().split()) # More than 6 lines of code will result in 0 score. Blank lines are not counted.
+for i in range(1,N,2):
+    print(('.|.'*i).center(M,'-'))
+print('WELCOME'.center(M,'-'))
+for i in range(N-2,-1,-2):
+    print(('.|.'*i).center(M,'-'))
+```
+
+## [String Formatting](https://www.hackerrank.com/challenges/python-string-formatting)
+
+```
+N = int(input())
+
+w = len(bin(N)[2:])
+for i in range(1,N+1):
+    print(str(i).rjust(w), end=' ')
+    print(oct(i)[2:].rjust(w), end=' ')
+    print(hex(i)[2:].upper().rjust(w), end=' ')
+    print(bin(i)[2:].rjust(w))
+```
+
+## [Alphabet Rangoli](https://www.hackerrank.com/challenges/alphabet-rangoli)
+
+```
+N = int(input())
+
+w = N+N-1 + (N+N-1)-1
+for i in range(0,N,1):
+    line = '-'.join([chr(97+N-1-abs(j)) for j in (list(range(0,i+1))+list(range(-i+1,1)))])
+    print(line.center(w,'-'))
+for i in range(N-2,-1,-1):
+    line = '-'.join([chr(97+N-1-j) for j in (list(range(0,i))+list(range(i,-1,-1)))])
+    print(line.center(w,'-'))
+```
+
+## [Capitalize](https://www.hackerrank.com/challenges/capitalize)
+
+```
+s = input()
+print(''.join([x.upper() if i == 0 else x.upper() if not s[i-1].isalnum() else x for i,x in enumerate(s)]))
+```
+
+## [The Minion Game](https://www.hackerrank.com/challenges/the-minion-game)
+
+```
+S = input()
+stuart = 0
+kevin = 0
+vowels = {'A','E','I','O','U'}
+
+for i,s in enumerate(S):
+    if s in vowels:
+        kevin += len(S)-i
+    else:
+        stuart += len(S)-i
+
+if kevin > stuart:
+    print('Kevin',kevin)
+elif stuart > kevin:
+    print('Stuart',stuart)
+else:
+    print('Draw')
+```
