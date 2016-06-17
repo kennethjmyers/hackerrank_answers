@@ -37,4 +37,59 @@ for _ in range(n):
 print(len(s))
 ```
 
-## 
+## [Set .discard(), .remove() & .pop()](https://www.hackerrank.com/challenges/py-set-discard-remove-pop)
+
+```
+def act(s, action, val=None):
+    '''
+    >>> act({1,2,3,4},'discard',4)
+    {1, 2, 3}
+    '''
+    if action == 'pop':
+        s.pop()
+    elif action == 'discard':
+        s.discard(val)
+    elif action == 'remove':
+        s.remove(val)
+    return s
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
+    n = int(input())
+    s = set(map(int, input().split()))
+    N = int(input())
+
+    for _ in range(N):
+        act_val = input().split()
+        if act_val[0] == 'pop':
+            s = act(s, 'pop')
+        else:
+            s = act(s, act_val[0], int(act_val[1]))
+
+    print(sum(s))
+```
+
+## [Set .union() Operation](https://www.hackerrank.com/challenges/py-set-union)
+
+```
+n = int(input())
+arr1 = set([int(i) for i in input().split()])
+b = int(input())
+arr2 = set([int(i) for i in input().split()])
+
+print(len(arr1.union(arr2)))
+```
+
+## [Set .intersection() Operation](https://www.hackerrank.com/challenges/py-set-intersection-operation)
+
+```
+n = int(input())
+arr1 = set([int(i) for i in input().split()])
+b = int(input())
+arr2 = set([int(i) for i in input().split()])
+
+print(len(arr1&arr2))
+```

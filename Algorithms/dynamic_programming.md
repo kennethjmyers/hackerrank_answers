@@ -247,3 +247,45 @@ if __name__ == "__main__":
         combinations = get_combinations(N)
         print(prime_count(combinations))
 ```
+
+## [Grid Walking](https://www.hackerrank.com/challenges/grid-walking/submissions/code/22250452)
+
+The general consensus on this problem is that it is much more difficult than it is labeled (should be difficult or advanced instead of moderate). I came up with this solution which works for smaller testcases/dimensions but times out on larger problems. The true solution involves something with combinations and [may involve this](https://barkingbogart.wordpress.com/2013/02/21/cnk-mod-1000000007/) according to one user (I expect its so you only have to calculate for a fraction of the positions instead of all of them). I may return to this problem one day but for now this is my solution.
+```
+from collections import defaultdict
+from copy import deepcopy
+
+# outer memo dictionary stores remaining moves
+# inner dictionary stores the possible answers from there
+memo = defaultdict(lambda:defaultdict(int))
+
+b = 1000000007
+
+def rec_paths(pos, limits, M):
+    tuple_pos = tuple(pos)
+    if tuple_pos in memo[M]:
+        return memo[M][tuple_pos]
+    if M == 0:
+        return 1
+    ways = 0
+    for i,x in enumerate(pos):
+        if x+1 <= limits[i]:
+            new_pos = deepcopy(pos)
+            new_pos[i]+=1
+            ways = (ways%b + rec_paths(new_pos,limits,M-1)%b)%b
+        if x-1 > 0:
+            new_pos = deepcopy(pos)
+            new_pos[i]-=1
+            ways = (ways%b + rec_paths(new_pos,limits,M-1)%b)%b
+    memo[M][tuple_pos] = ways
+    return ways
+
+T = int(input().strip())
+for _ in range(T):
+    memo = defaultdict(lambda:defaultdict(int))
+    N,M = [int(i) for i in input().strip().split()]
+    start = [int(i) for i in input().strip().split()]
+    d_limits = [int(i) for i in input().strip().split()]
+
+    print(rec_paths(start, d_limits, M))
+```
