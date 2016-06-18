@@ -289,3 +289,25 @@ for _ in range(T):
 
     print(rec_paths(start, d_limits, M))
 ```
+
+## [Longest Increasing Subsequence](https://www.hackerrank.com/challenges/longest-increasing-subsequent)
+
+My code uses something similar to that from the video linked in the page. Runtime is O(N^2) and so it only passes 3 test cases and times out on the rest. [This video](https://www.youtube.com/watch?v=S9oUiVYEq7E) helps to explain the nlogn solution.
+```
+N = int(input())
+
+memo = []
+for i in range(N):
+    if i == 0:
+        memo.append([int(input())])
+        continue
+    n = int(input())
+    current = [n]
+    for j in range(i):
+        if memo[j][-1] < n and len(memo[j])+1 >= len(current):
+            current = memo[j]+[n]
+    memo.append(current)
+
+max_len = len(max(memo, key=len))
+print(max_len)
+```
